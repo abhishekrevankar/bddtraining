@@ -12,7 +12,7 @@ namespace MarsRovers.Steps
     class MoveRoverSteps
     {
         private readonly ScenarioContext _scenarioContext;
-        private Rover rover;
+        private Rover _rover;
         public MoveRoverSteps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
@@ -20,33 +20,33 @@ namespace MarsRovers.Steps
         [Given(@"Rover is at (\d+), (\d+)")]
         public void GivenRoverIsAt(int x, int y)
         {
-           Point position = new Point(x, y);
-             rover = new Rover();
-            rover.SetPosition(position);
+            Point position = new Point(x, y);
+            _rover = new Rover();
+            _rover.SetPosition(position);
         }
 
         [Given(@"rover is pointing towards ([NEWS]{1})")]
         public void GivenRoverIsPointingTowardsDirection(string direction)
         {
-            rover.SetDirection(direction);
+            _rover.SetDirection(direction);
         }
 
         [When(@"rover moves forward")]
         public void WhenRoverMovesForward()
         {
-            rover.Move();
+            _rover.Move();
         }
 
         [Then(@"rover should be at (\d+), (\d+)")]
         public void ThenRoverShouldBeAt(int x, int y)
         {
-            rover.GetPosition().Should().Be(new Point(x, y));
+            _rover.GetPosition().Should().Be(new Point(x, y));
         }
 
         [Then(@"rover should be facing ([NEWS]{1})")]
         public void ThenRoverShouldBeFacingE(string direction)
         {
-            rover.GetDirection().Should().Be(direction);
+            _rover.GetDirection().Should().Be(direction);
         }
     }
 }
