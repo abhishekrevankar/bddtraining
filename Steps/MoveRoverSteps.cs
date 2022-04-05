@@ -11,42 +11,41 @@ namespace MarsRovers.Steps
     [Binding]
     class MoveRoverSteps
     {
-        private readonly ScenarioContext _scenarioContext;
-        private Rover _rover;
-        public MoveRoverSteps(ScenarioContext scenarioContext)
+        private readonly RoverTestContext _roverTestContext;
+        public MoveRoverSteps(RoverTestContext roverTestContext)
         {
-            _scenarioContext = scenarioContext;
+            _roverTestContext = roverTestContext;
         }
         [Given(@"Rover is at (\d+), (\d+)")]
         public void GivenRoverIsAt(int x, int y)
         {
             Point position = new Point(x, y);
-            _rover = new Rover();
-            _rover.SetPosition(position);
+            _roverTestContext._rover = new Rover();
+            _roverTestContext._rover.SetPosition(position);
         }
 
         [Given(@"rover is pointing towards ([NEWS]{1})")]
         public void GivenRoverIsPointingTowardsDirection(string direction)
         {
-            _rover.SetDirection(direction);
+            _roverTestContext._rover.SetDirection(direction);
         }
 
         [When(@"rover moves forward")]
         public void WhenRoverMovesForward()
         {
-            _rover.Move();
+            _roverTestContext._rover.Move();
         }
 
         [Then(@"rover should be at (\d+), (\d+)")]
         public void ThenRoverShouldBeAt(int x, int y)
         {
-            _rover.GetPosition().Should().Be(new Point(x, y));
+            _roverTestContext._rover.GetPosition().Should().Be(new Point(x, y));
         }
 
         [Then(@"rover should be facing ([NEWS]{1})")]
         public void ThenRoverShouldBeFacingE(string direction)
         {
-            _rover.GetDirection().Should().Be(direction);
+            _roverTestContext._rover.GetDirection().Should().Be(direction);
         }
     }
 }
