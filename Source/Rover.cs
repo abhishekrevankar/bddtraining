@@ -2,10 +2,10 @@
 
 namespace MarsRovers
 {
-    internal class Rover
+    public class Rover
     {
         private Point _position;
-        private string _direction;
+        private IDirection _direction;
 
         internal void SetPosition(Point position)
         {
@@ -19,33 +19,27 @@ namespace MarsRovers
 
         internal void SetDirection(string direction)
         {
-            _direction = direction;
+            _direction = DirectionFactory.GetDirection(direction);
         }
 
         internal string GetDirection()
         {
-            return _direction;
+            return _direction.ToString();
         }
 
         internal void Move()
         {
-            switch (_direction)
-            {
-                case "N":
-                    _position = new Point(_position.X, _position.Y + 1);
-                    break;
-                case "S":
-                    _position = new Point(_position.X, _position.Y - 1);
-                    break;
-                case "E":
-                    _position = new Point(_position.X + 1, _position.Y);
-                    break;
-                case "W":
-                    _position = new Point(_position.X - 1, _position.Y);
-                    break;
+            _position = _direction.MoveForward(_position);
+        }
 
+        internal void TurnLeft()
+        {
+            _direction = _direction.TurnLeft();
+        }
 
-            }
+        internal void TurnRight()
+        {
+            _direction = _direction.TurnRight();
         }
     }
 }

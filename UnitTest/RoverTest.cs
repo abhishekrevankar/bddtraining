@@ -23,7 +23,7 @@ namespace MarsRovers.UnitTest
             rover.SetDirection("E");
             Assert.AreEqual("E", rover.GetDirection());
         }
-        
+
         [Test]
         public void RoverShouldMoveForwardFromNorth()
         {
@@ -67,6 +67,40 @@ namespace MarsRovers.UnitTest
             rover.Move();
             Assert.AreEqual("W", rover.GetDirection());
             Assert.AreEqual(new Point(2, 6), rover.GetPosition());
+        }
+
+        [TestCase(0, 0, "N", "W")]
+        [TestCase(0, 0, "W", "S")]
+        [TestCase(0, 0, "S", "E")]
+        [TestCase(0, 0, "E", "N")]
+        public void RoverShouldTurnLeft(int x, int y, string input, string expected)
+        {
+            Point point = new Point(x, y);
+            Rover rover = new Rover();
+            rover.SetPosition(point);
+            rover.SetDirection(input);
+
+            rover.TurnLeft();
+
+            Assert.AreEqual(expected, rover.GetDirection());
+            Assert.AreEqual(point, rover.GetPosition());
+        }
+
+        [TestCase(0, 0, "N", "E")]
+        [TestCase(0, 0, "E", "S")]
+        [TestCase(0, 0, "S", "W")]
+        [TestCase(0, 0, "W", "N")]
+        public void RoverShouldTurnRight(int x, int y, string input, string expected)
+        {
+            Point point = new Point(x, y);
+            Rover rover = new Rover();
+            rover.SetPosition(point);
+            rover.SetDirection(input);
+
+            rover.TurnRight();
+
+            Assert.AreEqual(expected, rover.GetDirection());
+            Assert.AreEqual(point, rover.GetPosition());
         }
     }
 }
